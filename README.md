@@ -1,7 +1,9 @@
 # 2022Robot
-The robot for the 2022 FRC season. 
+The robot for the 2022 FRC season written by team **751** and for use on the robot: \<To Be Decided\>
+     
+Strategy: High Hub / Defense. Auto-align and Auton scoring
 
-Authors:
+### Authors:
 
       Kevin Woodman
       Evan Strohman
