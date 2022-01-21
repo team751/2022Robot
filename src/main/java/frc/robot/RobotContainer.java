@@ -5,8 +5,14 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.core751.CoreConstants;
+import frc.robot.core751.commands.drivetrain.ReversableArcadeDrive;
+import frc.robot.core751.subsystems.DifferentialDriveTrain;
+import frc.robot.core751.subsystems.DifferentialDriveTrain.SmartControllerProfile;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -22,6 +28,11 @@ public class RobotContainer {
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
+  private final DifferentialDriveTrain differentialDriveTrain = new DifferentialDriveTrain(CoreConstants.leftDrivetrainIDs, CoreConstants.rightDrivetrainIDs, CoreConstants.driveTrainMotorType, CoreConstants.driveMotorProfile, CoreConstants.driveInvertLeft, CoreConstants.driveInvertRight);
+  private final ReversableArcadeDrive reversableArcadeDrive = new ReversableArcadeDrive(CoreConstants.driverStick, differentialDriveTrain);
+
+  private final PowerDistribution pdp = new PowerDistribution();
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
@@ -34,7 +45,11 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+
+     differentialDriveTrain.setDefaultCommand(reversableArcadeDrive);
+     SmartDashboard.putData(pdp);
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
