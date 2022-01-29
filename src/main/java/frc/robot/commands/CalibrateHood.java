@@ -4,12 +4,13 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Hood;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
-
+/**
+ * Only run this once in a while (like every 5 games) or when needed. 
+ */
 public class CalibrateHood extends CommandBase {
   private final Hood hood;
 
