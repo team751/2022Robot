@@ -6,7 +6,9 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -22,79 +24,46 @@ public class Shooter extends SubsystemBase {
     Idle (Constants.shooterIdleSpeed),
     SpinUp (Constants.spinUpSpeed);
 
-    private float speed;
-    private State(float speed){
+    private double speed;
+    private State(double speed){
       this.speed = speed;
     }
-    public float getSpeed(){
+    public void setSpeed(double speed){
+      this.speed = speed;
+    }
+    public double getSpeed(){
       return this.speed;
     }
-    public void setSpeed(float speed){
-      this.speed = speed;
-    }
+    
 }
-
-  public enum Position{
-    Top,
-    Bottom,
-    Neither;
-  }
-
-  public float calibrationFactor; //The factor used for guessing the angle of the hood. 
-
-  public float hoodAngle = 0;
+  
   public float loadSpeed = Constants.loadSpeed;
 
   public State currentState = State.Idle;
-  public Position  currentPosition = Position.Neither;
 
   private MotorController loadingMotor;
-  private MotorController hoodMotor; 
   private CANSparkMax shootingMotor;
 
-  private DigitalInput topLimitSwitch;
-  private DigitalInput bottomLimitSwitch;
 
-  public Shooter(MotorController loadingMotor, MotorController hoodMotor, CANSparkMax shootingMotor,int topSwitchPin, int bottomSwitchPin) {
+  public Shooter(MotorController loadingMotor, CANSparkMax shootingMotor) {
     this.loadingMotor = loadingMotor;
-    this.hoodMotor = hoodMotor;
-    this.shootingMotor = shootingMotor;
-
-    this.topLimitSwitch = new DigitalInput(topSwitchPin);
-    this.bottomLimitSwitch = new DigitalInput(bottomSwitchPin);
+    this.shootingMotor = shootingMotor;    
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-
-    //Making sure we don't over extend
-    //Checking for contact every "frame" is there a better way?
-    if(this.topLimitSwitch.get()){
-      adjustAngle(0);
-      hoodAngle = Constants.hoodAngleMax;
-      currentPosition = Position.Top;
-    }
-    else if(this.bottomLimitSwitch.get()){
-      adjustAngle(0);
-      hoodAngle = Constants.hoodAngleMin;
-      currentPosition = Position.Bottom;
-    } else {
-      currentPosition = Position.Neither;
-    }
   }
 
-  public void idle(float speed){
-    State.Idle.setSpeed(speed);
-    idle();
+  public double normilizeSpeed(double speed){
+    speed = Math.min(speed, 1);
+    speed = Math.max(speed,-1);
+    return speed;
   }
-
-  public void idle(){
-    loadingMotor.set(State.Idle.getSpeed());
-    this.currentState = State.Idle;
-  } 
 
   //------------------Shooter Functions------------------
+
+
   /**
    * ENSURE THAT THE ROBOT IS IN SPIN UP BEFORE SHOOTING USING getState()
    */
@@ -106,47 +75,32 @@ public class Shooter extends SubsystemBase {
     loadingMotor.set(loadSpeed);
   }
 
-
-  public void spinUp(float speed){
+  public void spinUp(double speed){
+    speed = normilizeSpeed(speed);
     State.SpinUp.setSpeed(speed);
     spinUp();
   }
 
   public void spinUp(){ 
-        shootingMotor.set(State.SpinUp.getSpeed());
-        this.currentState = State.SpinUp;
+    shootingMotor.set(State.SpinUp.getSpeed());
+    this.currentState = State.SpinUp;
   }
 
-  //------------------Hood Functions------------------
-  //TODO make work
-  public void angle(float angle){
-    hoodAngle = angle;
+  public void idle(double speed){
+    speed = normilizeSpeed(speed);
+    State.Idle.setSpeed(speed);
+    idle();
   }
 
-  public void adjustAngle(float speed){
-    if(this.currentPosition == Position.Top){
-      speed = Math.min(0, speed);
-    }
-    else if(this.currentPosition == Position.Bottom){
-      speed = Math.max(0, speed);
-    }
-     hoodMotor.set(speed);
-  }
-
+  public void idle(){
+    loadingMotor.set(State.Idle.getSpeed());
+    this.currentState = State.Idle;
+  } 
+  
   //------------------Getter Functions------------------
-  public float getAngle(){
-    return hoodAngle;
-  }
+
   public State getState(){
     return currentState;
   }
-  public Position getPosition() {
-      return currentPosition;
-  }
 
 }
-//TODO
-/*
-  Add an angle calibration command to make sure we get our angle right on the hood. 
-
-*/
