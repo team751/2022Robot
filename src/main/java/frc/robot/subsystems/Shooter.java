@@ -64,16 +64,15 @@ public class Shooter extends SubsystemBase {
   //------------------Shooter Functions------------------
 
 
-  /**
-   * ENSURE THAT THE ROBOT IS IN SPIN UP BEFORE SHOOTING USING getState()
-   */
-  public void shoot(){
-    if(currentState != State.SpinUp){
-      System.out.println("/\\/\\/\\/\\/\\/\\/\\/\\ \n Make sure to spin up Wheel!! \n /\\/\\/\\/\\/\\/\\/\\/\\");
-      //Maybe throw an error?
-    }
-    loadingMotor.set(loadSpeed);
+  public void load(){
+    load(loadSpeed);
   }
+  
+  public void load(float speed){
+    loadingMotor.set(speed);
+  }
+  
+  
 
   public void spinUp(double speed){
     speed = normilizeSpeed(speed);

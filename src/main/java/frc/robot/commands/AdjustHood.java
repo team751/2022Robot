@@ -4,22 +4,25 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.ExampleSubsystem;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.core751.wrappers.OverrideableJoystick;
+import frc.robot.subsystems.Hood;
 
-/** An example command that uses an example subsystem. */
-public class ExampleCommand extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final ExampleSubsystem m_subsystem;
 
-  /**
-   * Creates a new ExampleCommand.
-   *
-   * @param subsystem The subsystem used by this command.
-   */
-  public ExampleCommand(ExampleSubsystem subsystem) {
-    m_subsystem = subsystem;
-    // Use addRequirements() here to declare subsystem dependencies.
+public class AdjustHood extends CommandBase {
+  private final Hood hood;
+  private OverrideableJoystick joystick;
+  
+  private int joystickPort;
+  
+
+
+  public AdjustHood(Hood subsystem,OverrideableJoystick joystick, int joystickPort) {
+    this.hood = subsystem;
+    this.joystick = joystick;
+    this.joystickPort = joystickPort;
+
     addRequirements(subsystem);
   }
 
@@ -29,7 +32,9 @@ public class ExampleCommand extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    hood.adjustAngle(joystick.getRawAxis(joystickPort));
+  }
 
   // Called once the command ends or is interrupted.
   @Override
