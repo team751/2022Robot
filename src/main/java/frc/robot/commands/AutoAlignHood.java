@@ -12,8 +12,6 @@ import frc.robot.subsystems.Hood;
 public class AutoAlignHood extends CommandBase {
   private final Hood hood;
 
-  
-
   public AutoAlignHood(Hood subsystem) {
     this.hood = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -27,8 +25,6 @@ public class AutoAlignHood extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {}
-
-
 
 
   // Called once the command ends or is interrupted.
