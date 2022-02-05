@@ -5,11 +5,10 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.AnalogPotentiometer;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import frc.robot.core751.wrappers.wTalonFX;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -41,13 +40,13 @@ public class Shooter extends SubsystemBase {
 
   public State currentState = State.Idle;
 
-  private MotorController loadingMotor;
-  private CANSparkMax shootingMotor;
+  private CANSparkMax loadingMotor;
+  private wTalonFX shootingMotor;
 
 
-  public Shooter(MotorController loadingMotor, CANSparkMax shootingMotor) {
-    this.loadingMotor = loadingMotor;
-    this.shootingMotor = shootingMotor;    
+  public Shooter(int loadingMotor, int shootingMotor) {
+    this.loadingMotor = new CANSparkMax(loadingMotor, MotorType.kBrushless);
+    this.shootingMotor = new wTalonFX(shootingMotor);    
   }
 
   @Override
@@ -72,8 +71,6 @@ public class Shooter extends SubsystemBase {
     loadingMotor.set(speed);
   }
   
-  
-
   public void spinUp(double speed){
     speed = normilizeSpeed(speed);
     State.SpinUp.setSpeed(speed);
