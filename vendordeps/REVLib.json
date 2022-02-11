@@ -23,7 +23,8 @@
             "isJar": false,
             "validPlatforms": [
                 "windowsx86-64",
-                "windowsx86"
+                "windowsx86",
+                "linuxathena"
             ]
         }
     ],
@@ -38,7 +39,8 @@
             "skipInvalidPlatforms": true,
             "binaryPlatforms": [
                 "windowsx86-64",
-                "windowsx86"
+                "windowsx86",
+                "linuxathena"
             ]
         },
         {
@@ -51,7 +53,8 @@
             "skipInvalidPlatforms": true,
             "binaryPlatforms": [
                 "windowsx86-64",
-                "windowsx86"
+                "windowsx86",
+                "linuxathena"
             ]
         }
     ]

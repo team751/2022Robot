@@ -31,13 +31,13 @@ public class RobotContainer {
 
   //public final JoystickRecorder joystickRecorder = new JoystickRecorder(CoreConstants.driverStick);
 
-  private final DifferentialDriveTrain differentialDriveTrain = new DifferentialDriveTrain(CoreConstants.leftDrivetrainIDs, CoreConstants.rightDrivetrainIDs, CoreConstants.driveTrainMotorType, CoreConstants.driveMotorProfile, CoreConstants.driveInvertLeft, CoreConstants.driveInvertRight);
-  private final ReversableArcadeDrive reversableArcadeDrive = new ReversableArcadeDrive(CoreConstants.driverStick, differentialDriveTrain);
+  //private final DifferentialDriveTrain differentialDriveTrain = new DifferentialDriveTrain(CoreConstants.leftDrivetrainIDs, CoreConstants.rightDrivetrainIDs, CoreConstants.driveTrainMotorType, CoreConstants.driveMotorProfile, CoreConstants.driveInvertLeft, CoreConstants.driveInvertRight);
+  //private final ReversableArcadeDrive reversableArcadeDrive = new ReversableArcadeDrive(CoreConstants.driverStick, differentialDriveTrain);
   //private final MotorTest motorTest = new MotorTest(motType.Falcon500,0);
   //private final RunMotorTest rMotorTest = new RunMotorTest(motorTest);
 
 
-  private final PowerDistribution pdp = new PowerDistribution();
+  //private final PowerDistribution pdp = new PowerDistribution();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -53,7 +53,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-     differentialDriveTrain.setDefaultCommand(reversableArcadeDrive);
+     //differentialDriveTrain.setDefaultCommand(reversableArcadeDrive);
      //SmartDashboard.putData(pdp);
   }
 
