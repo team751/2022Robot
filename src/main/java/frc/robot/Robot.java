@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
+  private Command m_teleopCommand;
 
   private RobotContainer m_robotContainer;
 
@@ -72,6 +73,13 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
 
     //m_robotContainer.joystickRecorder.schedule();
+    m_teleopCommand = m_robotContainer.getTeleopCommand();
+
+    // schedule the autonomous command (example)
+    if (m_teleopCommand != null) {
+      m_teleopCommand.schedule();
+    }
+
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
