@@ -35,7 +35,7 @@ public static int raiseButton;
  /----Shooter----/
 /--------------*/
 
-public static float shooterIdleSpeed = 0.5f; //Idling Speed
+public static float shooterIdleSpeed = -0.05f; //Idling Speed
 public static float spinUpSpeed = 0.85f; //Speed of launch
 public static float loadSpeed = 0.5f; //Speed of ball loading
 

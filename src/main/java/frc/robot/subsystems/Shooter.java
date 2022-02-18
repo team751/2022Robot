@@ -7,8 +7,10 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import frc.robot.core751.wrappers.AnalogDistanceSensor;
 import frc.robot.core751.wrappers.wTalonFX;
-
+import frc.robot.core751.wrappers.AnalogDistanceSensor.SensorType;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -43,21 +45,42 @@ public class Shooter extends SubsystemBase {
   private CANSparkMax loadingMotor;
   private wTalonFX shootingMotor;
 
+  private AnalogDistanceSensor loadingSensor;
+  private AnalogDistanceSensor holdingSensor;
 
-  public Shooter(int loadingMotor, int shootingMotor) {
-    this.loadingMotor = new CANSparkMax(loadingMotor, MotorType.kBrushless);
-    this.shootingMotor = new wTalonFX(shootingMotor);    
+  private double loadingDistance;
+  private double holdingDistance;
+
+
+
+
+
+  public Shooter(int loadingMotorId, int shootingMotorId) {
+    this.loadingMotor = new CANSparkMax(loadingMotorId,MotorType.kBrushless);
+    this.shootingMotor = new wTalonFX(shootingMotorId);    
+    //this.holdingSensor = new AnalogDistanceSensor(new AnalogInput(holdingSensorId),SensorType.MB1043);
+    //this.loadingSensor = new AnalogDistanceSensor(new AnalogInput(loadingSensorId),SensorType.MB1043);
+
   }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    //shootingMotor.set(shootingMotor.get());
+    //loadingMotor.set(loadingMotor.get());
   }
 
   public double normilizeSpeed(double speed){
     speed = Math.min(speed, 1);
     speed = Math.max(speed,-1);
     return speed;
+  }
+
+  public double getLoadingDistance() {
+      return loadingDistance;
+  }
+
+  public double getHoldingDistance() {
+      return holdingDistance;
   }
 
   //------------------Shooter Functions------------------
@@ -89,7 +112,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public void idle(){
-    loadingMotor.set(State.Idle.getSpeed());
+    shootingMotor.set(State.Idle.getSpeed());
     this.currentState = State.Idle;
   } 
   

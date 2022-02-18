@@ -15,19 +15,23 @@ public class Intake extends SubsystemBase{
 
     private DigitalInput topLimitSwitch;
     private DigitalInput bottomLimitSwitch;
-    
+
 
     public Intake(int intakeMotor, int windowMotorId){
-        this.intakeMotor = new CANSparkMax(intakeMotor, MotorType.kBrushless);
+        //this.intakeMotor = new CANSparkMax(intakeMotor, MotorType.kBrushless);
         this.windowMotor = new WPI_VictorSPX(windowMotorId);
     }
 
     @Override
     public void periodic() {
-        if(this.topLimitSwitch.get() || this.bottomLimitSwitch.get()){
-            windowMotor.set(0);
+            if(this.topLimitSwitch.get() && windowMotor.get() > 0){
+                windowMotor.set(0);
             }
-    }
+            if(this.bottomLimitSwitch.get() && windowMotor.get() < 0){
+                windowMotor.set(0);
+            }
+        }
+
 
     public void moveArmUp(){
         if(!this.topLimitSwitch.get()){

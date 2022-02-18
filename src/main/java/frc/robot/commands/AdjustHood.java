@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.core751.wrappers.OverrideableJoystick;
 import frc.robot.subsystems.Hood;
@@ -12,13 +13,13 @@ import frc.robot.subsystems.Hood;
 
 public class AdjustHood extends CommandBase {
   private final Hood hood;
-  private OverrideableJoystick joystick;
+  private Joystick joystick;
   
   private int joystickPort;
   
 
 
-  public AdjustHood(Hood subsystem,OverrideableJoystick joystick, int joystickPort) {
+  public AdjustHood(Hood subsystem,Joystick joystick, int joystickPort) {
     this.hood = subsystem;
     this.joystick = joystick;
     this.joystickPort = joystickPort;

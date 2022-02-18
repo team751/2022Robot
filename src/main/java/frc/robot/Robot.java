@@ -4,9 +4,14 @@
 
 package frc.robot;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.core751.CoreConstants;
+import frc.robot.core751.wrappers.wTalonFX;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -19,6 +24,8 @@ public class Robot extends TimedRobot {
   private Command m_teleopCommand;
 
   private RobotContainer m_robotContainer;
+  private CANSparkMax neo;
+  private wTalonFX falcon;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -72,6 +79,9 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
 
+    // neo = new CANSparkMax(7, MotorType.kBrushless);
+    // falcon = new wTalonFX(0);
+
     //m_robotContainer.joystickRecorder.schedule();
     m_teleopCommand = m_robotContainer.getTeleopCommand();
 
@@ -88,7 +98,15 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    // if(CoreConstants.driverStick.getRawButton(1)){
+    //     falcon.set(0.8);
+    //     neo.set(0.5);
+    // }else{
+    //     falcon.set(0);
+    //     neo.set(0);
+    // }
+  }
 
   @Override
   public void testInit() {
