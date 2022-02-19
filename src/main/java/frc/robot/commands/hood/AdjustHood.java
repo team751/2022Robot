@@ -2,22 +2,28 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.hood;
 
-import frc.robot.subsystems.Hood;
+
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.core751.wrappers.OverrideableJoystick;
+import frc.robot.subsystems.Hood;
 
 
-/**
- * Only run this once in a while (like every 5 games) or when needed. 
- */
-public class CalibrateHood extends CommandBase {
+public class AdjustHood extends CommandBase {
   private final Hood hood;
-
+  private Joystick joystick;
   
-  public CalibrateHood(Hood subsystem) {
-    hood = subsystem;
-    // Use addRequirements() here to declare subsystem dependencies.
+  private int joystickPort;
+  
+
+
+  public AdjustHood(Hood subsystem,Joystick joystick, int joystickPort) {
+    this.hood = subsystem;
+    this.joystick = joystick;
+    this.joystickPort = joystickPort;
+
     addRequirements(subsystem);
   }
 
@@ -28,13 +34,7 @@ public class CalibrateHood extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    hood.setSafeMode(false);
-    hood.adjustAngle(0.5);
-    try {
-      wait(10000);
-    } catch (InterruptedException e) {  e.printStackTrace(); }
-    hood.setSafeMode(true);
-    System.out.println("!!Calibration Factor: " + hood.getCalibrationFactor());
+    hood.adjustAngle(joystick.getRawAxis(joystickPort));
   }
 
   // Called once the command ends or is interrupted.

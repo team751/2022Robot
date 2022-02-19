@@ -7,17 +7,17 @@ package frc.robot.commands;
 import frc.robot.Constants;
 import frc.robot.core751.CoreConstants;
 import frc.robot.core751.wrappers.OverrideableJoystick;
-import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Shooter.State;
+import frc.robot.subsystems.ShooterDeprecated;
+import frc.robot.subsystems.ShooterDeprecated.State;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 
 /** An example command that uses an example subsystem. */
-public class ShootingCommand extends CommandBase {
+public class ShootingCommandDepracated extends CommandBase {
 
-  private final Shooter subsytem;
+  private final ShooterDeprecated subsytem;
   private Joystick joystick;
 
   private int shootButton;
@@ -26,7 +26,7 @@ public class ShootingCommand extends CommandBase {
   private int loadButton;
 
 
-  public ShootingCommand(Shooter subsystem,Joystick joystick,int shootButton,int loadButton,int spinUpButton, int idleButton) {
+  public ShootingCommandDepracated(ShooterDeprecated subsystem,Joystick joystick,int shootButton,int loadButton,int spinUpButton, int idleButton) {
     this.subsytem = subsystem;
     this.joystick = joystick;
     this.shootButton = shootButton;
@@ -53,7 +53,7 @@ public class ShootingCommand extends CommandBase {
 
       if(joystick.getRawButton(shootButton)){
         //subsytem.load();
-        subsytem.spinUp(0.75);
+        subsytem.spinUp(1);
       }else{
         subsytem.idle();
       }
