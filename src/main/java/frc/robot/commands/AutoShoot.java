@@ -1,8 +1,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.core751.subsystems.LimeLight;
-import frc.robot.core751.subsystems.PhotonVision;
+import frc.robot.core751.subsystems.camera.LimeLight;
+import frc.robot.core751.subsystems.camera.PhotonVision;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Shooter;
 

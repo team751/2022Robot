@@ -23,15 +23,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ShootingCommandDepracated;
 import frc.robot.core751.CoreConstants;
+import frc.robot.core751.auton.AutonDrive;
 import frc.robot.core751.commands.JoystickRecorder;
 import frc.robot.core751.commands.RunMotorTest;
 import frc.robot.core751.commands.camera.LimeLight.SwitchCameraMode;
 import frc.robot.core751.commands.drivetrain.ReversableArcadeDrive;
-import frc.robot.core751.subsystems.DifferentialDriveTrain;
-import frc.robot.core751.subsystems.LimeLight;
 import frc.robot.core751.subsystems.MotorTest;
-import frc.robot.core751.subsystems.DifferentialDriveTrain.SmartControllerProfile;
 import frc.robot.core751.subsystems.MotorTest.motType;
+import frc.robot.core751.subsystems.camera.LimeLight;
+import frc.robot.core751.subsystems.drivetrain.DifferentialDriveTrain;
+import frc.robot.core751.subsystems.drivetrain.TrajectoryDrive;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.ShooterDeprecated;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -48,15 +49,15 @@ public class RobotContainer {
 
   //public final JoystickRecorder joystickRecorder = new JoystickRecorder(CoreConstants.driverStick);
 
-  private final DifferentialDriveTrain differentialDriveTrain = new DifferentialDriveTrain(CoreConstants.leftDrivetrainIDs, CoreConstants.rightDrivetrainIDs, CoreConstants.driveTrainMotorType, CoreConstants.driveMotorProfile, CoreConstants.driveInvertLeft, CoreConstants.driveInvertRight);
+  private final TrajectoryDrive differentialDriveTrain = new TrajectoryDrive(CoreConstants.leftDrivetrainIDs, CoreConstants.rightDrivetrainIDs, CoreConstants.driveInvertLeft, CoreConstants.driveInvertRight);
   private final ReversableArcadeDrive reversableArcadeDrive = new ReversableArcadeDrive(CoreConstants.driverStick, differentialDriveTrain);
 
   
   private final ShooterDeprecated shooter = new ShooterDeprecated(7,0);
   private final ShootingCommandDepracated shootingCommand = new ShootingCommandDepracated(shooter, CoreConstants.driverStick, CoreConstants.Controller.A.getButtonMapping(), CoreConstants.Controller.B.getButtonMapping(), 0, 0);
 
-  //private final Intake intake = new Intake(8, 9);
-  //private final IntakeCommand intakeCommand = new IntakeCommand(intake, CoreConstants.Controller.Y.getButtonMapping() , CoreConstants.Controller.LB.getButtonMapping(), CoreConstants.Controller.RB.getButtonMapping());
+  private final Intake intake = new Intake(8, 9);
+  private final IntakeCommand intakeCommand = new IntakeCommand(intake, CoreConstants.Controller.Y.getButtonMapping() , CoreConstants.Controller.LB.getButtonMapping(), CoreConstants.Controller.RB.getButtonMapping());
   //private pdpTest pTest = new pdpTest(new int[] {0,15})
   //private final LimeLight limeLight = new LimeLight();
   //private final SwitchCameraMode switchCameraMode = new SwitchCameraMode(limeLight, CoreConstants.driverStick, 1);
@@ -80,7 +81,7 @@ public class RobotContainer {
      //motorTest.setDefaultCommand(rMotorTest);
      differentialDriveTrain.setDefaultCommand(reversableArcadeDrive);
      shooter.setDefaultCommand(shootingCommand);
-     //intake.setDefaultCommand(intakeCommand);
+     intake.setDefaultCommand(intakeCommand);
      //SmartDashboard.putData(pdp);
      //limeLight.setDefaultCommand(switchCameraMode);
   }

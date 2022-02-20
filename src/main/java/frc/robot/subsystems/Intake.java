@@ -18,18 +18,18 @@ public class Intake extends SubsystemBase{
 
 
     public Intake(int intakeMotor, int windowMotorId){
-        //this.intakeMotor = new CANSparkMax(intakeMotor, MotorType.kBrushless);
-        this.windowMotor = new WPI_VictorSPX(windowMotorId);
+        this.intakeMotor = new CANSparkMax(intakeMotor, MotorType.kBrushless);
+        //this.windowMotor = new WPI_VictorSPX(windowMotorId);
     }
 
     @Override
     public void periodic() {
-            if(this.topLimitSwitch.get() && windowMotor.get() > 0){
-                windowMotor.set(0);
-            }
-            if(this.bottomLimitSwitch.get() && windowMotor.get() < 0){
-                windowMotor.set(0);
-            }
+            // if(this.topLimitSwitch.get() && windowMotor.get() > 0){
+            //     windowMotor.set(0);
+            // }
+            // if(this.bottomLimitSwitch.get() && windowMotor.get() < 0){
+            //     windowMotor.set(0);
+            // }
         }
 
 

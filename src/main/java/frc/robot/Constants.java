@@ -35,9 +35,9 @@ public static int raiseButton;
  /----Shooter----/
 /--------------*/
 
-public static float shooterIdleSpeed = -0.05f; //Idling Speed
+public static float shooterIdleSpeed = 0f; //Idling Speed
 public static float spinUpSpeed = 1f; //Speed of launch
-public static float loadSpeed = 0.5f; //Speed of ball loading
+public static float loadSpeed = 0.25f; //Speed of ball loading
 
 
 
@@ -63,8 +63,8 @@ public static double angleTolerance = 1; //Tolerance for angle adjust
  /----Intake----/
 /-------------*/
 
-public static float intakeSpeed = 0.85f;
-public static float intakeIdleSpeed = -0.2f;
+public static float intakeSpeed = 0.35f;
+public static float intakeIdleSpeed = 0f;
 
 
 
