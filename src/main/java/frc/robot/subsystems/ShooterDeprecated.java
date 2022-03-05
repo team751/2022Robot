@@ -90,7 +90,7 @@ public class ShooterDeprecated extends SubsystemBase {
     load(loadSpeed);
   }
   
-  public void load(float speed){
+  public void load(double speed){
     loadingMotor.set(speed);
   }
   

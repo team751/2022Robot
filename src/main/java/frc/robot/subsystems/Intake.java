@@ -6,7 +6,9 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class Intake extends SubsystemBase{
     
@@ -19,7 +21,8 @@ public class Intake extends SubsystemBase{
 
     public Intake(int intakeMotor, int windowMotorId){
         this.intakeMotor = new CANSparkMax(intakeMotor, MotorType.kBrushless);
-        //this.windowMotor = new WPI_VictorSPX(windowMotorId);
+       
+        this.windowMotor = new WPI_VictorSPX(windowMotorId);
     }
 
     @Override
@@ -33,16 +36,10 @@ public class Intake extends SubsystemBase{
         }
 
 
-    public void moveArmUp(){
-        if(!this.topLimitSwitch.get()){
-        windowMotor.set(1);
-        }
-    }
-
-    public void moveArmDown(){
-        if(!this.bottomLimitSwitch.get()){
-            windowMotor.set(-1);
-            }
+    public void moveArm(double speed){
+        //if(!this.topLimitSwitch.get()){
+        windowMotor.set(speed);
+        //}
     }
 
     public void intake(double speed){

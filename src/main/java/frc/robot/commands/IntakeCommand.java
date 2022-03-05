@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.core751.CoreConstants;
@@ -24,6 +25,7 @@ public class IntakeCommand extends CommandBase{
         this.intakeMotorButton = intakeMotorButton;
         this.armButtonDown = armButtonDown;
         this.armButtonUp = armButtonUp;
+        SmartDashboard.putNumber("Speed Intake", Constants.intakeSpeed);
 
         addRequirements(intake);
     }
@@ -31,16 +33,18 @@ public class IntakeCommand extends CommandBase{
     @Override
     public void execute() {
         if(joystick.getRawButton(intakeMotorButton)){
-            intake.intake(intakeSpeed);
+            intake.intake(SmartDashboard.getNumber("Speed Intake", Constants.intakeSpeed));
         }else{
             intake.intake(Constants.intakeIdleSpeed);
         }
 
-        // if(joystick.getRawButton(armButtonDown)){
-        //     intake.moveArmDown();
-        // }else if (joystick.getRawButton(armButtonUp)){
-        //     intake.moveArmUp();
-        // }
+        if(joystick.getRawButton(armButtonDown)){
+            intake.moveArm(1);
+        }else if (joystick.getRawButton(armButtonUp)){
+            intake.moveArm(-1);
+        }else{
+            intake.moveArm(0);
+        }
     }
 
 }

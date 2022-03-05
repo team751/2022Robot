@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import frc.robot.core751.subsystems.camera.PhotonVision;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -48,12 +49,12 @@ public static float loadSpeed = 0.25f; //Speed of ball loading
 
 //NOT FINAL VALUES
 //Calibration Values
-public static double hoodAngleMax = 60;
-public static double hoodAngleMin = 30;
+public static double hoodAngleMax = 30;
+public static double hoodAngleMin = 0;
 
 //Soft caps
-public static double softAngleMax = 55; 
-public static double softAngleMin = 35;
+public static double softAngleMax = 25; 
+public static double softAngleMin = 0;
 
 public static double angleAdjustSpeed = 1;
 public static double angleTolerance = 1; //Tolerance for angle adjust
@@ -65,11 +66,6 @@ public static double angleTolerance = 1; //Tolerance for angle adjust
 
 public static float intakeSpeed = 0.35f;
 public static float intakeIdleSpeed = 0f;
-
-
-
-
-
 
 
 

@@ -7,6 +7,7 @@ package frc.robot.commands;
 import frc.robot.Constants;
 import frc.robot.core751.CoreConstants;
 import frc.robot.core751.wrappers.OverrideableJoystick;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.ShooterDeprecated;
 import frc.robot.subsystems.ShooterDeprecated.State;
 import edu.wpi.first.wpilibj.Joystick;
@@ -17,7 +18,7 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 /** An example command that uses an example subsystem. */
 public class ShootingCommandDepracated extends CommandBase {
 
-  private final ShooterDeprecated subsytem;
+  private final Shooter subsytem;
   private Joystick joystick;
 
   private int shootButton;
@@ -26,9 +27,9 @@ public class ShootingCommandDepracated extends CommandBase {
   private int loadButton;
 
 
-  public ShootingCommandDepracated(ShooterDeprecated subsystem,Joystick joystick,int shootButton,int loadButton,int spinUpButton, int idleButton) {
+  public ShootingCommandDepracated(Shooter subsystem,int shootButton,int loadButton,int spinUpButton, int idleButton) {
     this.subsytem = subsystem;
-    this.joystick = joystick;
+    this.joystick = CoreConstants.driverStick;
     this.shootButton = shootButton;
     this.loadButton = loadButton;
 
@@ -41,7 +42,7 @@ public class ShootingCommandDepracated extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
+    SmartDashboard.putNumber("SpinUpSpeed", 90);
 
   }
 
@@ -49,13 +50,17 @@ public class ShootingCommandDepracated extends CommandBase {
   @Override
   public void execute() {
 
-      State.SpinUp.setSpeed(SmartDashboard.getNumber("SpinUpSpeed",Constants.intakeSpeed));
+      //State.SpinUp.setSpeed(SmartDashboard.getNumber("SpinUpSpeed",Constants.spinUpSpeed));
+      double speed = SmartDashboard.getNumber("SpinUpSpeed",90);
+      SmartDashboard.putNumber("DistanceToTarget", CoreConstants.photonVision.getDistance());
 
       if(joystick.getRawButton(shootButton)){
         //subsytem.load();
-        subsytem.spinUp(1);
+        //subsytem.spinUp(Constants.spinUpSpeed);
+        subsytem.setFlywheelSpeed(speed);
       }else{
-        subsytem.idle();
+        subsytem.setFlywheelSpeed(0);
+        //subsytem.spinUp(0);
       }
       if(joystick.getRawButton(loadButton)){
         subsytem.load();

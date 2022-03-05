@@ -7,22 +7,20 @@ package frc.robot.commands.hood;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.core751.wrappers.OverrideableJoystick;
+import frc.robot.core751.CoreConstants;
 import frc.robot.subsystems.Hood;
 
 
 public class AdjustHood extends CommandBase {
   private final Hood hood;
-  private Joystick joystick;
-  
-  private int joystickPort;
+  private Joystick joystick = CoreConstants.driverStick;
+  private int axis;
   
 
 
-  public AdjustHood(Hood subsystem,Joystick joystick, int joystickPort) {
+  public AdjustHood(Hood subsystem, int axis) {
     this.hood = subsystem;
-    this.joystick = joystick;
-    this.joystickPort = joystickPort;
+    this.axis = axis;
 
     addRequirements(subsystem);
   }
@@ -34,7 +32,7 @@ public class AdjustHood extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    hood.adjustAngle(joystick.getRawAxis(joystickPort));
+    hood.adjustAngle(joystick.getRawAxis(axis));
   }
 
   // Called once the command ends or is interrupted.
