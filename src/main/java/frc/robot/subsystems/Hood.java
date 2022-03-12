@@ -4,12 +4,13 @@
 
 package frc.robot.subsystems;
 
+
+
+import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -22,105 +23,76 @@ public class Hood extends SubsystemBase {
     Updating
   }
 
-  public double calibrationFactor; //The factor used for guessing the angle of the hood. 
-
   private VictorSPX hoodMotor;
   public double hoodAngle = 0;
-  public double goalAngle;
   
-  private DigitalInput topLimitSwitch;
   private DigitalInput bottomLimitSwitch;
   private wAnalogPotentiometer pot;
 
   private double softAngleMax = Constants.softAngleMax;
-  private double softAngleMin = Constants.softAngleMin; //Just run into the bottom limit switch. 
-  private double angleAdjustSpeed = Constants.angleAdjustSpeed;
   
   private BangBang state = BangBang.Idle;
 
-  private boolean safeMode = true; 
+  private PIDController pidController = new PIDController(Constants.angleAdjustSpeed / 10, 0, 0); //At 10 deg error run at adjust speed.
 
   private double tolerance = Constants.angleTolerance;
 
-  public Hood(int hoodMotorId, int topSwitchPin, int bottomSwitchPin,int potPin) {
+  public Hood(int hoodMotorId, int bottomSwitchPin,int potPin) {
+    pidController.setTolerance(tolerance);
     hoodMotor = new VictorSPX(hoodMotorId);
-    hoodMotor.setInverted(false); //IDK yet.
+    hoodMotor.setInverted(true);
     //this.topLimitSwitch = new DigitalInput(topSwitchPin);
-    //this.bottomLimitSwitch = new DigitalInput(bottomSwitchPin);
-    this.pot = new wAnalogPotentiometer(potPin,10,-535);
+    this.bottomLimitSwitch = new DigitalInput(bottomSwitchPin);
+    this.pot = new wAnalogPotentiometer(potPin, -10,+1070);
   }
 
   @Override
   public void periodic() {
 
     SmartDashboard.putNumber("Pot Angle", pot.getAngle());
-    SmartDashboard.putNumber("Pot Value", pot.get());
-    // This method will be called once per scheduler run
+    //SmartDashboard.putNumber("5v", RobotController.getVoltage5V());
   
-    hoodAngle = pot.get() + calibrationFactor;
+    hoodAngle = pot.getAngle();
 
     //Making sure we don't over extend
     //Checking for contact every "frame" is there a better way?
 
-    // if(this.topLimitSwitch.get()){
+    // if(this.bottomLimitSwitch.get()){
     //   adjustAngle(0);
-    //   hoodAngle = Constants.hoodAngleMax;
-    //   calibrationFactor = Constants.hoodAngleMax - pot.get();
-    //  
-    // }
-    // else if(this.bottomLimitSwitch.get()){
-    //   adjustAngle(0);
-    //   hoodAngle = Constants.hoodAngleMin;
-    //   calibrationFactor = Constants.hoodAngleMin - pot.get();
-    // 
-    //} 
+    //   state = BangBang.Idle;
+    // } 
 
-    //For bang bang cycle.
-    // if(state == BangBang.Updating){
-    //   if (hoodAngle < goalAngle - Constants.angleTolerance || hoodAngle > goalAngle + Constants.angleTolerance){
-    //     if(hoodAngle < goalAngle){
-    //       adjustAngle(angleAdjustSpeed);
-    //     }else if(hoodAngle > goalAngle){
-    //       adjustAngle(-angleAdjustSpeed);
-    //     }
-    //   } else {
-    //     adjustAngle(0);
-    //     state = BangBang.Idle;
-    //   }
-    // }
-  }
-
-  public double normilizeSpeed(double speed){
-    speed = Math.min(speed, 1);
-    speed = Math.max(speed,-1);
-    return speed;
-  }
-
-  /** Only use this if you KNOW what you are doing */
-  public void setSafeMode(boolean safeMode){
-    this.safeMode = safeMode;
+    //For PID cycle.
+    if(state == BangBang.Updating){
+      if (!pidController.atSetpoint()){
+        adjustAngle(pidController.calculate(hoodAngle));
+      } else {
+        adjustAngle(0);
+        System.out.println("Hood IDLE");
+        state = BangBang.Idle;
+      }
+    }
   }
   
+  public void setState(BangBang state) {
+      this.state = state;
+  }
 
   //------------------Hood Functions------------------
   public void setAngle(double angle){ 
     angle = Math.min(angle, softAngleMax);
-    angle = Math.max(angle, softAngleMin);
+    angle = Math.max(angle, 0);
 
-    this.goalAngle = angle;
+    pidController.setSetpoint(angle);
     this.state = BangBang.Updating;
 
   }
 
   public void adjustAngle(double speed){
-    speed = normilizeSpeed(speed);
-    // if(this.topLimitSwitch.get()){
+    // if(this.bottomLimitSwitch.get()){
     //   speed = Math.min(0, speed);
     // }
-    // else if(this.hoodAngle >= softAngleMax && this.safeMode){
-    //   speed = Math.max(0, speed);
-    // }
-     //hoodMotor.set(speed);
+    hoodMotor.set(VictorSPXControlMode.PercentOutput, speed);
   }
 
 //------------------Getter Functions------------------
@@ -132,16 +104,8 @@ public class Hood extends SubsystemBase {
     return state;
   }
 
-  public boolean getSaveMode(){
-    return safeMode;
-  }
-
-  public double getCalibrationFactor(){
-    return calibrationFactor;
-  }
-
   public boolean atSetpoint(){
-    return (this.hoodAngle <= this.goalAngle + this.tolerance) && (this.hoodAngle >= this.goalAngle - this.tolerance);
+    return pidController.atSetpoint();
   }
 
 

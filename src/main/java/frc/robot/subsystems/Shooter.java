@@ -54,10 +54,10 @@ public class Shooter extends SubsystemBase {
     //Using https://docs.wpilib.org/en/stable/docs/software/advanced-controls/state-space/state-space-flywheel-walkthrough.html
 
     // Volts per (rotations per second)
-    private static final double kFlywheelKv = 0.10922; //Normal: 0.10922 //Flywheel 0.10956
+    private static final double kFlywheelKv = 0.10863; //Normal: 0.10922 //Flywheel 0.10956
 
     // Volts per (rotations per second squared)
-    private static final double kFlywheelKa = 0.0046519; //Normal: 0.0046519 //Flywheel: 0.0082591
+    private static final double kFlywheelKa = 0.00348; //Normal: 0.0046519 //Flywheel: 0.0082591
 
     private final LinearSystem<N1, N1, N1> m_flywheelPlant =
         LinearSystemId.identifyVelocitySystem(kFlywheelKv, kFlywheelKa);

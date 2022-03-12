@@ -39,8 +39,8 @@ public class ClearAndShoot extends CommandBase {
     public ClearAndShoot(Shooter shooter, Hood hood){
         this.shooter = shooter;
         this.hood = hood; 
-        shoot1 = new AutoShoot(shooter, hood, CoreConstants.photonVision);
-        shoot2 = new AutoShoot(shooter, hood, CoreConstants.photonVision);
+        //shoot1 = new AutoShoot(shooter, hood, CoreConstants.photonVision);
+        //shoot2 = new AutoShoot(shooter, hood, CoreConstants.photonVision);
     } 
 
     @Override

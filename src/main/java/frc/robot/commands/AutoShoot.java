@@ -27,23 +27,22 @@ public class AutoShoot extends CommandBase{
         this.shooter = shooter;
         this.hood = hood;
         this.photonVision = photonVision;
-
-        distance = photonVision.getDistance(); //Maybe make this fluctionation protected??
     }
 
     @Override
     public void execute() {
+        distance = photonVision.getDistance();  //Maybe make this fluctionation protected??
         shooter.setFlywheelSpeed(distanceToSpeed(distance));
         hood.setAngle(distanceToAngle(distance));
         if(hood.atSetpoint() && shooter.atSetpoint()){
             shooter.load(0.25);
         }
         
-        if(shooter.getTopSensorHasTarget()){
-            status = shotStatus.LoadedBall;
-        }else if(shooter.getTopSensorHasTarget() && status == shotStatus.LoadedBall){
-            status = shotStatus.Shot;
-        }
+        // if(shooter.getTopSensorHasTarget()){
+        //     status = shotStatus.LoadedBall;
+        // }else if(shooter.getTopSensorHasTarget() && status == shotStatus.LoadedBall){
+        //     status = shotStatus.Shot;
+        // }
     }
 
     @Override

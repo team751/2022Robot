@@ -42,7 +42,7 @@ public class ShootingCommandDepracated extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    SmartDashboard.putNumber("SpinUpSpeed", 90);
+    SmartDashboard.putNumber("SpinUpSpeed", Constants.spinUpSpeed);
 
   }
 
@@ -51,16 +51,16 @@ public class ShootingCommandDepracated extends CommandBase {
   public void execute() {
 
       //State.SpinUp.setSpeed(SmartDashboard.getNumber("SpinUpSpeed",Constants.spinUpSpeed));
-      double speed = SmartDashboard.getNumber("SpinUpSpeed",90);
-      SmartDashboard.putNumber("DistanceToTarget", CoreConstants.photonVision.getDistance());
+      double speed = SmartDashboard.getNumber("SpinUpSpeed",Constants.spinUpSpeed);
+      //SmartDashboard.putNumber("DistanceToTarget", CoreConstants.photonVision.getDistance());
 
       if(joystick.getRawButton(shootButton)){
-        //subsytem.load();
-        //subsytem.spinUp(Constants.spinUpSpeed);
         subsytem.setFlywheelSpeed(speed);
+      }else if (joystick.getRawButton(3)){
+        subsytem.setFlywheelSpeed(-20);
+        subsytem.load(-0.3);
       }else{
         subsytem.setFlywheelSpeed(0);
-        //subsytem.spinUp(0);
       }
       if(joystick.getRawButton(loadButton)){
         subsytem.load();

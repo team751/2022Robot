@@ -11,7 +11,7 @@ import frc.robot.core751.subsystems.camera.PhotonVision;
  * constants. This class should not be used for any other purpose. All constants should be declared
  * globally (i.e. public static). Do not put anything functional in this class.
  *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
+ * It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
@@ -37,8 +37,8 @@ public static int raiseButton;
 /--------------*/
 
 public static float shooterIdleSpeed = 0f; //Idling Speed
-public static float spinUpSpeed = 1f; //Speed of launch
-public static float loadSpeed = 0.25f; //Speed of ball loading
+public static float spinUpSpeed = 100f; //Speed of launch
+public static float loadSpeed = 0.35f; //Speed of ball loading
 
 
 
@@ -49,15 +49,15 @@ public static float loadSpeed = 0.25f; //Speed of ball loading
 
 //NOT FINAL VALUES
 //Calibration Values
-public static double hoodAngleMax = 30;
+public static double hoodAngleMax = 50;
 public static double hoodAngleMin = 0;
 
 //Soft caps
-public static double softAngleMax = 25; 
+public static double softAngleMax = 40; 
 public static double softAngleMin = 0;
 
-public static double angleAdjustSpeed = 1;
-public static double angleTolerance = 1; //Tolerance for angle adjust
+public static double angleAdjustSpeed = 0.20;
+public static double angleTolerance = 1.5; //Tolerance for angle adjust
 
 
   /*-------------/

@@ -12,8 +12,8 @@ import frc.robot.Constants;
 
 public class Intake extends SubsystemBase{
     
-    WPI_VictorSPX windowMotor;
-    CANSparkMax intakeMotor;
+    private WPI_VictorSPX windowMotor;
+    private CANSparkMax intakeMotor;
 
     private DigitalInput topLimitSwitch;
     private DigitalInput bottomLimitSwitch;
